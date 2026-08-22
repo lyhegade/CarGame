@@ -30,6 +30,10 @@ namespace CarGame
         //ENEMY CARS
         private Image[] enemyCarSprites;
 
+        //Player
+        private int playerWidth = 55;
+        private int playerHeight = 95;
+
 
         public Form1()
         {
@@ -141,6 +145,24 @@ namespace CarGame
             }
         }
 
+        private void SelectCar(Point mousePos)
+        {
+            if (!choosingCar)
+                return;
+
+            for (int i = 0; i < carFrames.Length; i++)
+            {
+                if (carFrames[i].Contains(mousePos))
+                {
+                    playerCar = cars[i];
+                    choosingCar = false;
+                    Cursor = Cursors.Default;
+                    Invalidate();
+                    return;
+                }
+            }
+        }
+
 
         //--------------------------- EVENT HANDLERS ---------------------------
         private void TimerRoad_Tick(object sender, EventArgs e)
@@ -172,7 +194,7 @@ namespace CarGame
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
         {
-
+            SelectCar(e.Location);
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -181,6 +203,8 @@ namespace CarGame
 
             if (choosingCar)
                 DrawCarSelection(e.Graphics);
+            else
+                DrawPlayer(e.Graphics);
         }
 
 
@@ -215,7 +239,10 @@ namespace CarGame
 
         }
 
-
+        private void DrawPlayer(Graphics g)
+        {
+            g.DrawImage(playerCar, new Rectangle(170, 400, playerWidth, playerHeight));
+        }
 
     }
 }
