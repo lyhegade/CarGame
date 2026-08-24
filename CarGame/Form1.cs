@@ -397,7 +397,16 @@ namespace CarGame
 
         private void DrawPlayer(Graphics g)
         {
-            g.DrawImage(playerCar, new Rectangle(playerX, 400, playerWidth, playerHeight));
+            g.DrawImage(playerCar, playerX, (int) playerY, playerWidth, playerHeight);
+
+            if (isBraking)
+            {
+                using (Brush brush = new SolidBrush(Color.Red))
+                {
+                    g.FillEllipse(brush, playerX + 10, playerY + playerHeight - 10,8 ,8 );
+                    g.FillEllipse(brush, playerX + playerWidth - 18, playerY + playerHeight - 10, 8, 8);
+                }
+            }
         }
 
     }
