@@ -55,7 +55,7 @@ namespace CarGame
         private int[] enemySprite = new int[MAX_ENEMIES];
         private int[] enemylane = new int[MAX_ENEMIES];
         private float[] enemyY = new float[MAX_ENEMIES];
-        private bool[] enemyActive = new bool [MAX_ENEMIES];
+        private bool[] enemyActive = new bool[MAX_ENEMIES];
 
         private int enemyWidth = 55;
         private int enemyHeight = 95;
@@ -84,9 +84,9 @@ namespace CarGame
         //DISTANCE
         private float totalDistanceMeters = 0f;
         private float pixelperMeter = 12f;
-        private int[][] trafficPatterns=
+        private int[][] trafficPatterns =
         {
-            new[]{0}, 
+            new[]{0},
             new[]{1},
             new[]{2},
             new[]{3},
@@ -184,7 +184,7 @@ namespace CarGame
         private void InitilizePlayer()
         {
             normalPlayerY = ClientSize.Height - 120;
-            playerY= normalPlayerY;
+            playerY = normalPlayerY;
             targetPlayerY = playerY;
 
             lanes = new int[]
@@ -258,7 +258,7 @@ namespace CarGame
             if (km <= 1)
                 SpawnInLane(rnd.Next(4), -enemyHeight);
 
-            else if(km <= 3)
+            else if (km <= 3)
             {
                 pattern = trafficPatterns[rnd.Next(8)];
                 foreach (int lane in pattern)
@@ -299,7 +299,7 @@ namespace CarGame
                     return false;
             }
             return true;
-            }
+        }
         private void CheckCollission()
         {
             //PlayerHitBox
@@ -325,7 +325,7 @@ namespace CarGame
 
                 if (playerRect.IntersectsWith(enemyRect))
                 {
-                    gameOver= true;
+                    gameOver = true;
                     Collide = true;
                     Invalidate();
                     return;
@@ -457,7 +457,7 @@ namespace CarGame
 
             if (spawnDistance >= spawnEvery)
             {
-                spawnDistance= 0;
+                spawnDistance = 0;
                 SpawnEnemy();
             }
 
@@ -481,7 +481,7 @@ namespace CarGame
         {
             if (gameOver)
                 return;
-            
+
             UpdateSpeed();
             UpdateRoad();
             UpdatePlayerPosition();
@@ -494,7 +494,7 @@ namespace CarGame
         {
             if (gameOver)
             {
-                if((e.KeyCode == Keys.Escape) || (e.KeyCode == Keys.Enter))
+                if ((e.KeyCode == Keys.Escape) || (e.KeyCode == Keys.Enter))
                     RestartGame();
                 return;
             }
@@ -509,7 +509,7 @@ namespace CarGame
                 targetLane++;
 
             if (e.KeyCode == Keys.Up || e.KeyCode == Keys.W)
-                moveForward = true; 
+                moveForward = true;
             if (e.KeyCode == Keys.Down || e.KeyCode == Keys.S)
                 isBraking = true;
         }
@@ -557,7 +557,7 @@ namespace CarGame
         //--------------------------- DRAWING METHODS ---------------------------
         private void DrawRoad(Graphics g)
         {
-            int y= (int)roadY;
+            int y = (int)roadY;
             g.DrawImage(roadImage, 0, y, roadWidth, roadHeight);
             g.DrawImage(roadImage, 0, y - roadHeight, roadWidth, roadHeight);
         }
@@ -588,13 +588,13 @@ namespace CarGame
 
         private void DrawPlayer(Graphics g)
         {
-            g.DrawImage(playerCar, playerX, (int) playerY, playerWidth, playerHeight);
+            g.DrawImage(playerCar, playerX, (int)playerY, playerWidth, playerHeight);
 
             if (isBraking)
             {
                 using (Brush brush = new SolidBrush(Color.Red))
                 {
-                    g.FillEllipse(brush, playerX + 10, playerY + playerHeight - 10,8 ,8 );
+                    g.FillEllipse(brush, playerX + 10, playerY + playerHeight - 10, 8, 8);
                     g.FillEllipse(brush, playerX + playerWidth - 18, playerY + playerHeight - 10, 8, 8);
                 }
             }
@@ -620,8 +620,8 @@ namespace CarGame
         {
             int activeEnemies = 0;
             for (int i = 0; i < MAX_ENEMIES; i++)
-            { 
-               if (enemyActive[i])
+            {
+                if (enemyActive[i])
                 {
                     activeEnemies++;
 
@@ -651,13 +651,13 @@ namespace CarGame
                 g.FillRectangle(overlay, new Rectangle(5, ClientSize.Height - 105, 150, 100));
 
             //Draw Debug Info
-            using(Font font = new Font ("Arial", 10, FontStyle.Regular))
+            using (Font font = new Font("Arial", 10, FontStyle.Regular))
             {
                 string debugtext = $"SPEED: {speed:f2}\n" +
                                    $"DISTANCE: {totalDistanceMeters:f2}m\n" +
                                    $"COLLIDED: {Collide}\n" +
                                    $"PLAYER LANE: {currentLane}\n" +
-                                   $"TARGET LANE: {targetLane}\n"+
+                                   $"TARGET LANE: {targetLane}\n" +
                                    $"ENEMY ACTIVE: {activeEnemies}";
 
                 g.DrawString(debugtext, font, Brushes.Yellow, 0, ClientSize.Height - 100);
@@ -694,10 +694,10 @@ namespace CarGame
         }
         private void DrawHud(Graphics g)
         {
-            g.SmoothingMode= SmoothingMode.AntiAlias;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
 
             //Speed
-            DrawHudPanel(g,new Rectangle(10, 10,120, 55));
+            DrawHudPanel(g, new Rectangle(10, 10, 120, 55));
 
             using (Font big = new Font("Segoe UI", 22, FontStyle.Bold))
             using (Font small = new Font("Segoe UI", 10))
